@@ -8,7 +8,7 @@
 		 colors="true">
   <testsuites>
     <testsuite name="PHP.Skelton">
-      <directory suffix="Test.php">tests</directory>
+      <directory suffix="Test.php">src</directory>
     </testsuite>
   </testsuites>
 
