@@ -21,11 +21,16 @@ class Greeter
      * @var array
      */
     private $timeRangeAndGreetings;
+    /**
+     * @var Globe
+     */
+    private $globe;
 
-    function __construct(Clock $clock)
+    function __construct(Clock $clock, Globe $globe)
     {
         $this->clock = $clock;
         $this->timeRangeAndGreetings = [];
+        $this->globe = $globe;
     }
 
     public function addTimeRangeAndGreeting(TimeRange $timeRange, $greeting)

@@ -15,6 +15,10 @@ class GreeterTest extends \PHPUnit_Framework_TestCase
      * @var Clock
      */
     private $clock;
+    /**
+     * @var Globe
+     */
+    private $globe;
 
     /**
      * @test
@@ -109,6 +113,7 @@ class GreeterTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->clock = $this->getMock('CodeIQ\Greeter\Clock');
-        $this->SUT   = new Greeter($this->clock);
+        $this->globe = $this->getMock('CodeIQ\Greeter\Globe');
+        $this->SUT   = new Greeter($this->clock, $this->globe);
     }
 }
