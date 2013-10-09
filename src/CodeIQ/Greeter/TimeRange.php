@@ -10,11 +10,11 @@ abstract class TimeRange
     /**
      * @var \DateTimeImmutable
      */
-    private $first;
+    protected $first;
     /**
      * @var \DateTimeImmutable
      */
-    private $second;
+    protected $second;
 
     public function __construct($id, \DateTimeImmutable $first, \DateTimeImmutable $second)
     {
