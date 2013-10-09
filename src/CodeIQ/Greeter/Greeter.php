@@ -20,7 +20,11 @@ class Greeter
     /**
      * @var array
      */
-    private $timeRangeAndGreetings;
+    private $timeRanges;
+    /**
+     * @var array
+     */
+    private $greetings;
     /**
      * @var Globe
      */
@@ -28,27 +32,43 @@ class Greeter
 
     function __construct(Clock $clock, Globe $globe)
     {
-        $this->clock = $clock;
-        $this->timeRangeAndGreetings = [];
-        $this->globe = $globe;
+        $this->clock      = $clock;
+        $this->globe      = $globe;
+        $this->timeRanges = [];
+        $this->greetings  = [];
     }
 
-    public function addTimeRangeAndGreeting(TimeRange $timeRange, $greeting)
+    public function addTimeRange(TimeRange $timeRange)
     {
-        $this->timeRangeAndGreetings[] = ['range' => $timeRange, 'greeting' => $greeting];
+        $this->timeRanges[] = $timeRange;
+    }
+
+    public function addGreeting($locale, $timeRangeId, $greeting)
+    {
+        $this->greetings[$locale][$timeRangeId] = $greeting;
     }
 
     public function greet()
     {
-        $currentTime = $this->clock->getCurrentTime();
-        foreach ($this->timeRangeAndGreetings as $timeRangeAndGreeting)
-        {
-            if ($timeRangeAndGreeting['range']->contains($currentTime))
-            {
-                return $timeRangeAndGreeting['greeting'];
-            }
+        $currentTime   = $this->clock->getCurrentTime();
+        $timeRangeId = $this->decideTimeRange($currentTime);
+        $currentLocale = $this->globe->getLocale();
+
+        if (isset($this->greetings[$currentLocale][$timeRangeId])) {
+            return $this->greetings[$currentLocale][$timeRangeId];
         }
 
         return '';
+    }
+
+    private function decideTimeRange($currentTime)
+    {
+        foreach ($this->timeRanges as $timeRange) {
+            if ($timeRange->contains($currentTime)) {
+                return $timeRange->getId();
+            }
+        }
+
+        return null;
     }
 }
