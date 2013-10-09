@@ -31,19 +31,9 @@ class Greeter
     public function greet()
     {
         $currentTime = $this->clock->getCurrentTime();
-        if ($this->timeIsMorning($currentTime)
+        if ($this->morningTimeRange->contains($currentTime)
         ) {
             return 'おはようございます';
         }
-    }
-
-    /**
-     * @param $currentTime
-     * @return bool
-     */
-    private function timeIsMorning($currentTime)
-    {
-        return $currentTime >= new \DateTimeImmutable('05:00:00') &&
-        $currentTime < new \DateTimeImmutable('12:00:00');
     }
 }
