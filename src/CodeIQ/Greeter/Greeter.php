@@ -13,6 +13,16 @@ namespace CodeIQ\Greeter;
  */
 class Greeter
 {
+    /**
+     * @var Clock
+     */
+    private $clock;
+
+    function __construct(Clock $clock)
+    {
+        $this->clock = $clock;
+    }
+
     public function greet()
     {
         return 'おはようございます';
