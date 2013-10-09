@@ -4,7 +4,6 @@ namespace CodeIQ\Greeter\Tests;
 
 use CodeIQ\Greeter\Clock;
 use CodeIQ\Greeter\Greeter;
-use CodeIQ\Greeter\MorningTimeRange;
 
 class GreeterTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,49 +15,100 @@ class GreeterTest extends \PHPUnit_Framework_TestCase
      * @var Clock
      */
     private $clock;
-    /**
-     * @var MorningTimeRange
-     */
-    private $morningTimeRange;
 
     /**
      * @test
      */
-    public function 朝ならおはようございます()
+    public function 最初の時間範囲にマッチ()
     {
         $time = new \DateTimeImmutable();
+
         $this->clock->expects($this->once())
             ->method('getCurrentTime')
             ->will($this->returnValue($time));
-        $this->morningTimeRange->expects($this->once())
+
+        $firstTimeRange = $this->getMock('CodeIQ\Greeter\TimeRange', array(), array(), '', false);
+        $firstTimeRange->expects($this->once())
             ->method('contains')
             ->with($this->equalTo($time))
             ->will($this->returnValue(true));
 
-        $this->assertThat($this->SUT->greet(), $this->equalTo('おはようございます'));
+        $secondTimeRange = $this->getMock('CodeIQ\Greeter\TimeRange', array(), array(), '', false);
+        $secondTimeRange->expects($this->never())
+            ->method('contains');
+
+        $this->SUT->addTimeRangeAndGreeting($firstTimeRange, 'one');
+        $this->SUT->addTimeRangeAndGreeting($secondTimeRange, 'two');
+
+        $this->assertThat($this->SUT->greet(), $this->equalTo('one'));
     }
 
     /**
      * @test
      */
-    public function 朝でないならあいさつなし()
+    public function ニつ目の時間範囲にマッチ()
     {
         $time = new \DateTimeImmutable();
+
         $this->clock->expects($this->once())
             ->method('getCurrentTime')
             ->will($this->returnValue($time));
-        $this->morningTimeRange->expects($this->once())
+
+        $firstTimeRange = $this->getMock('CodeIQ\Greeter\TimeRange', array(), array(), '', false);
+        $firstTimeRange->expects($this->once())
             ->method('contains')
             ->with($this->equalTo($time))
             ->will($this->returnValue(false));
+
+        $secondTimeRange = $this->getMock('CodeIQ\Greeter\TimeRange', array(), array(), '', false);
+        $secondTimeRange->expects($this->once())
+            ->method('contains')
+            ->with($this->equalTo($time))
+            ->will($this->returnValue(true));
+
+        $thirdTimeRange = $this->getMock('CodeIQ\Greeter\TimeRange', array(), array(), '', false);
+        $thirdTimeRange->expects($this->never())
+            ->method('contains');
+
+        $this->SUT->addTimeRangeAndGreeting($firstTimeRange, 'one');
+        $this->SUT->addTimeRangeAndGreeting($secondTimeRange, 'two');
+        $this->SUT->addTimeRangeAndGreeting($thirdTimeRange, 'three');
+
+        $this->assertThat($this->SUT->greet(), $this->equalTo('two'));
+    }
+
+    /**
+     * @test
+     */
+    public function 時間範囲にマッチしない()
+    {
+        $time = new \DateTimeImmutable();
+
+        $this->clock->expects($this->once())
+            ->method('getCurrentTime')
+            ->will($this->returnValue($time));
+
+        $firstTimeRange = $this->getMock('CodeIQ\Greeter\TimeRange', array(), array(), '', false);
+        $firstTimeRange->expects($this->once())
+            ->method('contains')
+            ->with($this->equalTo($time))
+            ->will($this->returnValue(false));
+
+        $secondTimeRange = $this->getMock('CodeIQ\Greeter\TimeRange', array(), array(), '', false);
+        $secondTimeRange->expects($this->once())
+            ->method('contains')
+            ->with($this->equalTo($time))
+            ->will($this->returnValue(false));
+
+        $this->SUT->addTimeRangeAndGreeting($firstTimeRange, 'one');
+        $this->SUT->addTimeRangeAndGreeting($secondTimeRange, 'two');
 
         $this->assertThat($this->SUT->greet(), $this->equalTo(''));
     }
 
     protected function setUp()
     {
-        $this->clock            = $this->getMock('CodeIQ\Greeter\Clock');
-        $this->morningTimeRange = $this->getMock('CodeIQ\Greeter\MorningTimeRange');
-        $this->SUT              = new Greeter($this->clock, $this->morningTimeRange);
+        $this->clock = $this->getMock('CodeIQ\Greeter\Clock');
+        $this->SUT   = new Greeter($this->clock);
     }
 }
