@@ -26,9 +26,14 @@ class GreeterTest extends \PHPUnit_Framework_TestCase
      */
     public function 朝ならおはようございます()
     {
+        $time = new \DateTimeImmutable();
         $this->clock->expects($this->once())
             ->method('getCurrentTime')
-            ->will($this->returnValue(new \DateTimeImmutable('08:00:00')));
+            ->will($this->returnValue($time));
+        $this->morningTimeRange->expects($this->once())
+            ->method('contains')
+            ->with($this->equalTo($time))
+            ->will($this->returnValue(true));
 
         $this->assertThat($this->SUT->greet(), $this->equalTo('おはようございます'));
     }
@@ -38,9 +43,14 @@ class GreeterTest extends \PHPUnit_Framework_TestCase
      */
     public function 朝でないならあいさつなし()
     {
+        $time = new \DateTimeImmutable();
         $this->clock->expects($this->once())
             ->method('getCurrentTime')
-            ->will($this->returnValue(new \DateTimeImmutable('15:00:00')));
+            ->will($this->returnValue($time));
+        $this->morningTimeRange->expects($this->once())
+            ->method('contains')
+            ->with($this->equalTo($time))
+            ->will($this->returnValue(false));
 
         $this->assertThat($this->SUT->greet(), $this->equalTo(''));
     }
@@ -48,7 +58,7 @@ class GreeterTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->clock            = $this->getMock('CodeIQ\Greeter\Clock');
-        $this->morningTimeRange = new MorningTimeRange();
+        $this->morningTimeRange = $this->getMock('CodeIQ\Greeter\MorningTimeRange');
         $this->SUT              = new Greeter($this->clock, $this->morningTimeRange);
     }
 }
