@@ -2,6 +2,7 @@
 
 namespace CodeIQ\Greeter\Tests;
 
+use CodeIQ\Greeter\Clock;
 use CodeIQ\Greeter\Greeter;
 
 class GreeterTest extends \PHPUnit_Framework_TestCase
@@ -10,6 +11,10 @@ class GreeterTest extends \PHPUnit_Framework_TestCase
      * @var Greeter
      */
     public $SUT;
+    /**
+     * @var Clock
+     */
+    private $clock;
 
     /**
      * @test
@@ -21,6 +26,7 @@ class GreeterTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->SUT = new Greeter;
+        $this->clock = $this->getMock('CodeIQ\Greeter\Clock');
+        $this->SUT   = new Greeter($this->clock);
     }
 }
