@@ -13,4 +13,8 @@ namespace CodeIQ\Greeter;
  */
 class Greeter
 {
+    public function greet()
+    {
+        return 'おはようございます';
+    }
 }
