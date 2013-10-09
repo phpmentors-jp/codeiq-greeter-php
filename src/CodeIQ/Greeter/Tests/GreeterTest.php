@@ -4,6 +4,7 @@ namespace CodeIQ\Greeter\Tests;
 
 use CodeIQ\Greeter\Clock;
 use CodeIQ\Greeter\Greeter;
+use CodeIQ\Greeter\MorningTimeRange;
 
 class GreeterTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,6 +16,10 @@ class GreeterTest extends \PHPUnit_Framework_TestCase
      * @var Clock
      */
     private $clock;
+    /**
+     * @var MorningTimeRange
+     */
+    private $morningTimeRange;
 
     /**
      * @test
@@ -42,7 +47,8 @@ class GreeterTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->clock = $this->getMock('CodeIQ\Greeter\Clock');
-        $this->SUT   = new Greeter($this->clock);
+        $this->clock            = $this->getMock('CodeIQ\Greeter\Clock');
+        $this->morningTimeRange = new MorningTimeRange();
+        $this->SUT              = new Greeter($this->clock, $this->morningTimeRange);
     }
 }

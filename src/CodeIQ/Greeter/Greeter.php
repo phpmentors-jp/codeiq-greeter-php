@@ -17,10 +17,15 @@ class Greeter
      * @var Clock
      */
     private $clock;
+    /**
+     * @var MorningTimeRange
+     */
+    private $morningTimeRange;
 
-    function __construct(Clock $clock)
+    function __construct(Clock $clock, MorningTimeRange $morningTimeRange)
     {
         $this->clock = $clock;
+        $this->morningTimeRange = $morningTimeRange;
     }
 
     public function greet()
