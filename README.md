@@ -1,48 +1,17 @@
-PHP.Skeleton
-=======
-A standard PHP project skeleton
----------------------------------------------
-This project was created in order to provide project skeleton to start new PHP project.
-Various config files are ready for continuous integration.
+Greeterサンプル
+===============
 
- * phpunit.xml for [phpunit](http://phpunit.de/manual/current/en/index.html)
- * build.xml for [Apache Ant](http://ant.apache.org/) / [Jenkins](http://jenkins-ci.org/)
- * .travis.yml for [Travis CI](https://travis-ci.org/)
+時刻に依存する機能に対するテスタビリティのための設計
 
-Requirements
-------------
- * PHP 5.3+
+## 環境
 
-Getting started
----------------
+* PHP 5.5.4以降
+* PHPUnit 3.7
 
-### Create project
-```
- $ composer create-project php/skeleton {Vendor.Package}
- $ cd {Vendor.Package}
- $ composer dump-autoload
- $ phpunit
-```
+## 著作権
 
+Copyright (c) 2013 GOTO Hidenori &lt;kubo@iteman.jp&gt;, All rights reserved.
 
-Using ant
----------
+## ライセンス
 
-### Prepare
-
-Install QA(Quality Assurance) tools
-```bash
- $ ant require
-```
-Export composer bin path 
-```bash
-export PATH="$HOME/.composer/vendor/bin:$PATH"
-```
-
-## ant
-```bash
- $ ant
- 
- $ ant test
- $ ant report
-```
+[2条項BSDライセンス](http://opensource.org/licenses/BSD-2-Clause)
