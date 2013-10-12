@@ -1,9 +1,18 @@
 <?php
-
+/**
+ * This file is part of the CodeIQ.Greeter package
+ *
+ * @license http://opensource.org/licenses/bsd-license.php BSD
+ */
 namespace CodeIQ\Greeter\Tests;
 
 use CodeIQ\Greeter\ClosedTimeRange;
 
+/**
+ * Class ClosedTimeRangeTest
+ *
+ * @package CodeIQ\Greeter\Tests
+ */
 class ClosedTimeRangeTest extends \PHPUnit_Framework_TestCase
 {
     /**

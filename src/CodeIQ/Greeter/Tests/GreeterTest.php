@@ -1,11 +1,20 @@
 <?php
-
+/**
+ * This file is part of the CodeIQ.Greeter package
+ *
+ * @license http://opensource.org/licenses/bsd-license.php BSD
+ */
 namespace CodeIQ\Greeter\Tests;
 
 use CodeIQ\Greeter\Clock;
 use CodeIQ\Greeter\Greeter;
 use CodeIQ\Greeter\TimeRange;
 
+/**
+ * Class GreeterTest
+ *
+ * @package CodeIQ\Greeter\Tests
+ */
 class GreeterTest extends \PHPUnit_Framework_TestCase
 {
     const FIRSTRANGE  = 'firstrange';
