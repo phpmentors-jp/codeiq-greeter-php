@@ -10,7 +10,7 @@ Greeterサンプル
 
 ## 著作権
 
-Copyright (c) 2013 GOTO Hidenori &lt;kubo@iteman.jp&gt;, All rights reserved.
+Copyright (c) 2013 GOTO Hidenori &lt;hidenorigoto@gmail.com&gt;, All rights reserved.
 
 ## ライセンス
 
